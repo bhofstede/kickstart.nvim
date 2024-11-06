@@ -19,12 +19,12 @@ return {
           -- `friendly-snippets` contains a variety of premade snippets.
           --    See the README about individual language/framework/plugin snippets:
           --    https://github.com/rafamadriz/friendly-snippets
-          -- {
-          --   'rafamadriz/friendly-snippets',
-          --   config = function()
-          --     require('luasnip.loaders.from_vscode').lazy_load()
-          --   end,
-          -- },
+          {
+            'rafamadriz/friendly-snippets',
+            config = function()
+              require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+          },
         },
       },
       'saadparwaiz1/cmp_luasnip',
@@ -34,7 +34,17 @@ return {
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+
+      -- ADDITION: codeium
+      {
+        'Exafunction/codeium.nvim',
+        cmd = 'Codeium',
+        build = ':Codeium Auth',
+        opts = {},
+        event = 'InsertEnter',
+      },
     },
+
     config = function()
       -- See `:help cmp`
       local cmp = require 'cmp'
@@ -48,6 +58,13 @@ return {
           end,
         },
         completion = { completeopt = 'menu,menuone,noinsert' },
+
+        window = {
+          -- completion = cmp.config.window.bordered(),
+          -- documentation = cmp.config.window.bordered(),
+        },
+
+        experimental = { ghost_text = true },
 
         -- For an understanding of why these mappings were
         -- chosen, you will need to read `:help ins-completion`
@@ -73,6 +90,25 @@ return {
           --  completions whenever it has completion options available.
           ['<C-Space>'] = cmp.mapping.complete {},
 
+          -- Ignore up and down for cmp navigation
+          ['<Up>'] = cmp.mapping {
+            i = function(fallback)
+              if cmp.visible() then
+                cmp.close()
+              end
+              fallback()
+            end,
+          },
+
+          ['<Down>'] = cmp.mapping {
+            i = function(fallback)
+              if cmp.visible() then
+                cmp.close()
+              end
+              fallback()
+            end,
+          },
+
           -- Think of <c-l> as moving to the right of your snippet expansion.
           --  So if you have a snippet that's like:
           --  function $name($args)
@@ -94,11 +130,23 @@ return {
 
           -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
           --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
+
+          -- ADDITION: codeium AI autocomplete
+          opts = function(_, opts)
+            table.insert(opts.sources, 1, {
+              name = 'codeium',
+              group_index = 1,
+              priority = 100,
+            })
+          end,
         },
         sources = {
           { name = 'nvim_lsp' },
+          { name = 'buffer' },
           { name = 'luasnip' },
           { name = 'path' },
+          { name = 'codeium' },
+          { name = 'neogen' },
         },
       }
     end,

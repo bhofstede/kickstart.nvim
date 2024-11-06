@@ -48,4 +48,18 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Neotree commands
+-- vim.api.nvim_set_keymap('n', '/', ':Neotree toggle current reveal_force_cwd<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '|', ':Neotree reveal<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', 'gd', ':Neotree float reveal_file=<cfile> reveal_force_cwd<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<leader>b', ':Neotree toggle show buffers right<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<leader>s', ':Neotree float git_status<CR>', { noremap = true, silent = true })
+
+
+-- Markdown preview
+vim.api.nvim_set_keymap('n', '<C-s>', ':MarkdownPreview', { desc = 'Open markdown preview' })
+vim.api.nvim_set_keymap('n', '<M-s>', ':MarkdownPreviewStop', { desc = 'Close markdown preview' })
+vim.api.nvim_set_keymap('n', '<C-p>', ':MarkdownPreviewToggle', { desc = 'Toggle markdown preview' })
+
+
 -- vim: ts=2 sts=2 sw=2 et
