@@ -7,6 +7,7 @@ return {
       'antoinemadec/FixCursorHold.nvim',
       'nvim-treesitter/nvim-treesitter',
       'nvim-neotest/neotest-python',
+      'rustaceanvim'
     },
     opts = {
       -- Can be a list of adapters like what neotest expects,
@@ -15,6 +16,7 @@ return {
       -- The adapter will then be automatically loaded with the config.
       adapters = {
         'neotest-python',
+        'rustaceanvim.neotest'
       },
       -- Example for loading neotest-golang with a custom config
       -- adapters = {

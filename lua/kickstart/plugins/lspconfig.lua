@@ -29,7 +29,7 @@ return {
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',       opts = {} },
 
       -- Allows extra capabilities provided by nvim-cmp
       'hrsh7th/cmp-nvim-lsp',
@@ -154,7 +154,7 @@ return {
           end
 
           -- Autosave for Python
-          if client.supports_method 'textDocument/formatting' then
+          if client and client.supports_method 'textDocument/formatting' then
             vim.api.nvim_create_autocmd('BufWritePre', {
               group = vim.api.nvim_create_augroup('LspFormatting', { clear = true }),
               buffer = event.buf,
@@ -197,7 +197,7 @@ return {
             },
           },
         },
-        -- rust_analyzer = {},
+        rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -238,7 +238,7 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
-        'isort', -- Used to format Python code
+        'isort',  -- Used to format Python code
         'black',
         'debugpy',
         'flake8',
