@@ -29,7 +29,7 @@ return {
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       opts = {} },
+      { 'j-hui/fidget.nvim', opts = {} },
 
       -- Allows extra capabilities provided by nvim-cmp
       'hrsh7th/cmp-nvim-lsp',
@@ -208,6 +208,14 @@ return {
         tailwindcss = {},
         eslint = {},
         cssls = {},
+        html = {
+          configurationSection = { 'html', 'css', 'javascript' },
+          embeddedLanguages = {
+            css = true,
+            javascript = true,
+          },
+          provideFormatter = true,
+        },
 
         lua_ls = {
           -- cmd = {...},
@@ -223,6 +231,8 @@ return {
             },
           },
         },
+        spectral = {},
+        vacuum = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -238,12 +248,12 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
-        'isort',  -- Used to format Python code
-        'black',
-        'debugpy',
-        'flake8',
-        'mypy',
-        'pylint',
+        -- 'isort', -- Used to format Python code
+        -- 'black',
+        -- 'debugpy',
+        -- 'flake8',
+        -- 'mypy',
+        -- 'pylint',
         'prettierd', -- Used to format typescript
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }

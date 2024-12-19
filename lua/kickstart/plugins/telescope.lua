@@ -108,6 +108,61 @@ return {
       vim.keymap.set('n', '<leader>sn', function()
         builtin.find_files { cwd = vim.fn.stdpath 'config' }
       end, { desc = '[S]earch [N]eovim files' })
+
+      -- Shortcut to search for currently hightlighted path
+      vim.keymap.set('n', '<leader>sp', function()
+        local line = vim.fn.getline '.' -- Get the current line of text
+        local cursor_pos = vim.fn.col '.' - 1 -- Lua is 0-indexed, so we subtract 1
+
+        -- Expand backwards to find the start of the path-like string
+        local start_pos = cursor_pos
+        while start_pos > 0 and string.match(line:sub(start_pos, start_pos), '[%w%p]+') do
+          start_pos = start_pos - 1
+        end
+        -- If the cursor is at the start of the line, just stay at the current position
+        if start_pos > 0 and line:sub(start_pos, start_pos) == '/' then
+          start_pos = start_pos + 1
+        end
+
+        -- Expand forwards to find the end of the path-like string
+        local end_pos = cursor_pos
+        while end_pos < #line and string.match(line:sub(end_pos + 1, end_pos + 1), '[%w%p]+') do
+          end_pos = end_pos + 1
+        end
+
+        -- Extract the full path-like string under the cursor
+        local match = line:sub(start_pos + 2, end_pos - 1)
+
+        -- Print the matched string (optional, for debugging)
+        -- print('Path matched:', match)
+
+        if match ~= '' then
+          local cwd = vim.fn.expand '%:p:h' -- Get current working directory (file's directory)
+
+          local absolute_path
+          if match:sub(1, 1) == '/' then
+            -- If the path starts with '/', it is absolute, so use it directly
+            absolute_path = match
+          else
+            -- If the path is relative, resolve it based on the current file's directory
+            absolute_path = cwd .. '/' .. match
+          end
+
+          -- Debug print absolute path
+          -- print('path (', vim.fn.filereadable(absolute_path), '): ', absolute_path)
+
+          if vim.fn.filereadable(absolute_path) == 1 then
+            vim.cmd('edit ' .. absolute_path) -- Open the file directly
+          else
+            builtin.find_files { -- search using telescope
+              cwd = cwd,
+              search_dirs = { match },
+            }
+          end
+        else
+          print 'No path under cursor'
+        end
+      end, { desc = '[S]earch [p]ath', noremap = true, silent = true })
     end,
   },
 }
