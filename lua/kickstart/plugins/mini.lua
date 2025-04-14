@@ -34,6 +34,11 @@ return {
 
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
+      --
+      require('mini.move').setup()
+      require('mini.pairs').setup()
+      require('mini.splitjoin').setup()
+      require('mini.hipatterns').setup()
     end,
   },
 }

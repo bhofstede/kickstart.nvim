@@ -55,6 +55,9 @@ vim.api.nvim_set_keymap('n', '|', ':Neotree toggle<CR>', { noremap = true, silen
 -- vim.api.nvim_set_keymap('n', '<leader>b', ':Neotree toggle show buffers right<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<leader>s', ':Neotree float git_status<CR>', { noremap = true, silent = true })
 
+-- ZenMode
+vim.api.nvim_set_keymap('n', 'zZ', ':ZenMode<CR>', { desc = '[Z]enMode' })
+
 -- Markdown preview
 vim.api.nvim_set_keymap('n', '<C-s>', ':MarkdownPreview', { desc = 'Open markdown preview' })
 vim.api.nvim_set_keymap('n', '<M-s>', ':MarkdownPreviewStop', { desc = 'Close markdown preview' })
