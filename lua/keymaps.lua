@@ -50,13 +50,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- Neotree commands
 -- vim.api.nvim_set_keymap('n', '/', ':Neotree toggle current reveal_force_cwd<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '|', ':Neotree toggle<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '|', ':Neotree toggle reveal_force_cwd<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', 'gd', ':Neotree float reveal_file=<cfile> reveal_force_cwd<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<leader>b', ':Neotree toggle show buffers right<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<leader>s', ':Neotree float git_status<CR>', { noremap = true, silent = true })
 
 -- ZenMode
-vim.api.nvim_set_keymap('n', 'zZ', ':ZenMode<CR>', { desc = '[Z]enMode' })
+vim.api.nvim_set_keymap('n', 'Z', ':ZenMode<CR>', { desc = '[Z]enMode' })
 
 -- Markdown preview
 vim.api.nvim_set_keymap('n', '<C-s>', ':MarkdownPreview', { desc = 'Open markdown preview' })
