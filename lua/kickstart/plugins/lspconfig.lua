@@ -233,6 +233,34 @@ return {
         },
         spectral = {},
         vacuum = {},
+
+        -- Latex and Typst
+        ltex = {
+          settings = {
+            ltex = {
+              filetypes = { 'latex', 'tex', 'bib' },
+              language = 'en-GB',
+            },
+          },
+        },
+        ltex_plus = {
+          filetypes = { 'latex', 'tex', 'bib' },
+          disable = { 'typst' },
+          settings = {
+            ltex = {
+              language = 'en-GB',
+            },
+          },
+        },
+        tinymist = {
+          filetypes = { 'typst' },
+          settings = {
+            formatterMode = 'typstyle',
+            exportPdf = 'onType',
+            semanticTokens = 'disable',
+            outputPath = '$root/output/$dir/$name',
+          },
+        },
       }
 
       -- Ensure the servers and tools above are installed
