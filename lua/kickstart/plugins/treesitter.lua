@@ -19,6 +19,7 @@ return {
         'json',
         'regex',
         'sql',
+        'vue',
         'typescript',
         'javascript',
         'tsx',

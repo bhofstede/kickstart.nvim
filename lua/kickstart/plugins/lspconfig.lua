@@ -198,12 +198,23 @@ return {
           },
         },
         rust_analyzer = {},
+
+        kotlin = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
+        vue_language_server = {
+          init_options = {
+            vue = {
+              -- disable hybrid mode
+              hybridMode = false,
+            },
+          },
+          filetypes = { 'vue', 'javascript', 'typescript', 'json' },
+        },
         ts_ls = {},
         tailwindcss = {},
         eslint = {},
@@ -216,7 +227,8 @@ return {
           },
           provideFormatter = true,
         },
-
+        jsonlint = {},
+        sonarlint_language_server = {},
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},
@@ -231,8 +243,9 @@ return {
             },
           },
         },
-        spectral = {},
+        -- For OAS
         vacuum = {},
+        -- spectral = {}, -- Disabled: gave many errors with $ref
       }
 
       -- Ensure the servers and tools above are installed

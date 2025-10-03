@@ -11,6 +11,14 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagn
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
+-- Todo keymaps
+vim.keymap.set('n', ']t', function()
+  require('todo-comments').jump_next()
+end, { desc = 'Next todo comment' })
+vim.keymap.set('n', '[t', function()
+  require('todo-comments').jump_prev()
+end, { desc = 'Previous todo comment' })
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -50,13 +58,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- Neotree commands
 -- vim.api.nvim_set_keymap('n', '/', ':Neotree toggle current reveal_force_cwd<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '|', ':Neotree toggle<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '|', ':Neotree toggle reveal_force_cwd<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', 'gd', ':Neotree float reveal_file=<cfile> reveal_force_cwd<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<leader>b', ':Neotree toggle show buffers right<CR>', { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<leader>s', ':Neotree float git_status<CR>', { noremap = true, silent = true })
 
 -- ZenMode
-vim.api.nvim_set_keymap('n', 'zZ', ':ZenMode<CR>', { desc = '[Z]enMode' })
+vim.api.nvim_set_keymap('n', 'Z', ':ZenMode<CR>', { desc = '[Z]enMode' })
 
 -- Markdown preview
 vim.api.nvim_set_keymap('n', '<C-s>', ':MarkdownPreview', { desc = 'Open markdown preview' })

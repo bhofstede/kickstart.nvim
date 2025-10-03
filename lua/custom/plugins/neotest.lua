@@ -7,24 +7,65 @@ return {
       'antoinemadec/FixCursorHold.nvim',
       'nvim-treesitter/nvim-treesitter',
       'nvim-neotest/neotest-python',
-      'rustaceanvim'
+      'nvim-neotest/neotest-jest',
+      'thenbe/neotest-playwright',
+      'rustaceanvim',
     },
     opts = {
       -- Can be a list of adapters like what neotest expects,
       -- or a list of adapter names,
       -- or a table of adapter names, mapped to adapter configs.
       -- The adapter will then be automatically loaded with the config.
-      adapters = {
-        'neotest-python',
-        'rustaceanvim.neotest'
-      },
-      -- Example for loading neotest-golang with a custom config
       -- adapters = {
-      --   ["neotest-golang"] = {
-      --     go_test_args = { "-v", "-race", "-count=1", "-timeout=60s" },
-      --     dap_go_enabled = true,
-      --   },
+      -- 'neotest-python',
+      -- 'neotest-jest',
+      -- 'neotest-playwright',
+      -- 'rustaceanvim.neotest'
       -- },
+      -- Example for loading neotest-golang with a custom config
+      adapters = {
+        --   ["neotest-golang"] = {
+        --     go_test_args = { "-v", "-race", "-count=1", "-timeout=60s" },
+        --     dap_go_enabled = true,
+        --   },
+        ['neotest-jest'] = {
+
+          jestCommand = 'npm test -- ',
+          jestConfigFile = function(file)
+            local cwd = vim.fn.getcwd()
+
+            -- Start looking from the current directory and go upwards to the root
+            local current_dir = cwd
+            while true do
+              -- Check if jest.config.ts exists in the current directory
+              local config_path = current_dir .. '/jest.config.ts'
+              if vim.fn.filereadable(config_path) == 1 then
+                return config_path
+              end
+
+              -- Move up to the parent directory
+              local parent_dir = vim.fn.fnamemodify(current_dir, ':h')
+
+              -- If the parent directory is the same as the current directory, we've reached the root
+              if parent_dir == current_dir then
+                break
+              end
+
+              -- Move up to the parent directory
+              current_dir = parent_dir
+            end
+
+            -- If no jest.config.ts is found, return nil or handle accordingly
+            return nil
+          end,
+          jest_test_discovery = true,
+          env = { CI = true },
+          cwd = function(path)
+            return 'hello/' .. vim.fn.getcwd()
+          end,
+        },
+      },
+
       status = { virtual_text = true },
       output = { open_on_run = true },
       quickfix = {
