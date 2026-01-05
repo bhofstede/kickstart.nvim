@@ -28,7 +28,7 @@ return {
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -85,6 +85,7 @@ return {
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+      vim.keymap.set('n', '<leader>sa', builtin.git_status, { desc = '[S]earch Git St[A]tus' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -111,7 +112,7 @@ return {
 
       -- Shortcut to search for currently hightlighted path
       vim.keymap.set('n', '<leader>sp', function()
-        local line = vim.fn.getline '.'       -- Get the current line of text
+        local line = vim.fn.getline '.' -- Get the current line of text
         local cursor_pos = vim.fn.col '.' - 1 -- Lua is 0-indexed, so we subtract 1
 
         -- Expand backwards to find the start of the path-like string
@@ -154,7 +155,7 @@ return {
           if vim.fn.filereadable(absolute_path) == 1 then
             vim.cmd('edit ' .. absolute_path) -- Open the file directly
           else
-            builtin.find_files {              -- search using telescope
+            builtin.find_files { -- search using telescope
               cwd = cwd,
               search_dirs = { match },
             }
