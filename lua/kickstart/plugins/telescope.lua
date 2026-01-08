@@ -56,12 +56,30 @@ return {
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
-        -- defaults = {
-        --   mappings = {
-        --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-        --   },
-        -- },
-        -- pickers = {}
+        defaults = {
+          mappings = {
+            i = {
+              ['<c-enter>'] = 'to_fuzzy_refine',
+              ['<C-h>'] = function(prompt_bufnr)
+                local picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
+                local current_input = require('telescope.actions.state').get_current_line()
+
+                -- Close and reopen with toggled hidden
+                require('telescope.actions').close(prompt_bufnr)
+                require('telescope.builtin').find_files {
+                  hidden = not picker.finder.hidden,
+                  no_ignore = not picker.finder.no_ignore,
+                  default_text = current_input,
+                }
+              end,
+            },
+          },
+        },
+        pickers = {
+          find_files = {
+            hidden = false, -- default state
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
